@@ -27,9 +27,9 @@
 
 /***********************************************************
 
-Fast Simulation tool for Inner Tracker Systems
+ Fast Simulation tool for Inner Tracker Systems
 
-***********************************************************/
+ ***********************************************************/
 
 #define dNdEtaMinB                                                             \
   1 // 950//660//950           // Multiplicity per unit Eta  (AuAu MinBias =
@@ -41,7 +41,7 @@ Fast Simulation tool for Inner Tracker Systems
   1.0 // Increase multiplicity in detector (0.0 to 1.0 * UPCRate ) (eg 1.0)
 #define OtherBackground                                                        \
   0.0 // Increase multiplicity in detector (0.0 to 1.0 * minBias)  (eg 0.0)
-      // -> ChiSquarePlusConfLevel = 2, ChiSquare = 1, Simple = 0.
+// -> ChiSquarePlusConfLevel = 2, ChiSquare = 1, Simple = 0.
 
 #define PionMass 0.139 // Mass of the Pion
 #define KaonMass 0.498 // Mass of the Kaon
@@ -561,9 +561,9 @@ R5Detector::R5Detector(char *name, char *title)
 }
 
 R5Detector::~R5Detector() { //
-  // virtual destructor
-  //
-  //  delete fLayers;
+                            // virtual destructor
+                            //
+                            //  delete fLayers;
 }
 
 void R5Detector::AddLayer(char *name, Double_t radius, Double_t zmax,
@@ -786,16 +786,16 @@ Double_t R5Detector::UpcHitDensity(Double_t radius) {
 
   Double_t mUPCelectrons = 0;
   /*
-  //  mUPCelectrons =  fLhcUPCscale * (1.23 - radius/6.5)      ;  // Fit to Kai
-  Schweda summary tables at RHIC * 'scale' for LHC mUPCelectrons =
-  fLhcUPCscale*5456/(radius*radius)/dNdEtaMinB;      // Fit to
-  'Rossegger,Sadovsky'-Alice simulation if ( mUPCelectrons < 0 ) mUPCelectrons =
-  0.0             ;  // UPC electrons fall off quickly and don't go to large R
-  mUPCelectrons *= IntegratedHitDensity(dNdEtaMinB,radius) ;  // UPCs increase
-  Mulitiplicty ~ proportional to MinBias rate mUPCelectrons *=
-  UPCBackgroundMultiplier                 ;  // Allow for an external multiplier
-  (eg 0-1) to turn off UPC
-  */
+   //  mUPCelectrons =  fLhcUPCscale * (1.23 - radius/6.5)      ;  // Fit to Kai
+   Schweda summary tables at RHIC * 'scale' for LHC mUPCelectrons =
+   fLhcUPCscale*5456/(radius*radius)/dNdEtaMinB;      // Fit to
+   'Rossegger,Sadovsky'-Alice simulation if ( mUPCelectrons < 0 ) mUPCelectrons
+   =  0.0             ;  // UPC electrons fall off quickly and don't go to large
+   R mUPCelectrons *= IntegratedHitDensity(dNdEtaMinB,radius) ;  // UPCs
+   increase Mulitiplicty ~ proportional to MinBias rate mUPCelectrons *=
+   UPCBackgroundMultiplier                 ;  // Allow for an external
+   multiplier (eg 0-1) to turn off UPC
+   */
   return mUPCelectrons;
 }
 
@@ -905,7 +905,7 @@ void R5Detector::PrepareKalmanTrack(Double_t pt, Double_t eta, Double_t mass,
   TransportKalmanTrackWithMS(&probe);
   probe.ResetCovMat(); // reset cov.matrix
   fProbeOutMC = probe; // store propagated track
-  //
+                       //
 }
 
 //________________________________________________________________________________
@@ -1198,31 +1198,31 @@ Bool_t R5Detector::ProcessTrack(Double_t pt, Double_t eta, Double_t mass,
   }
 
   /*
-  // do final inward propagation with eventual fake clusters attachment
-  probeInw = fProbeOutMC;
-  probeInw.ResetTrackingInfo();  // used default (pion) mass for tracking
-  if (outerReached<outerTracked) outerReached = outerTracked;
-  for (int ilr=outerReached+1;ilr--;) {
-    R5Layer *lr = GetLayer(ilr);
-    if (!probeInw.PropagateToR(lr->GetRadius(), fBFieldG, kInward)) break;
-    Bool_t accZOK = lr->InZAcceptane(probeInw.GetZ());
-    if (!accZOK && !lr->IsDead()) {
-      probeInw.SetInnerChecked(lr->GetActiveID());
-      cl = lr->GetMCCluster();
-      if (cl->IsValid()) {
-        if (!probeInw.PropagateToCluster(cl,fBFieldG)) return kFALSE; // track
-  was not propagated to cluster frame lr->SetExtInward(&probeInw); // set
-  extrapolation errors if (!UpdateTrack(&probeInw, lr, cl)) break;
-      }
-      else {
-        lr->SetExtInward(&probeInw); // set extrapolation errors
-      }
-    }
+   // do final inward propagation with eventual fake clusters attachment
+   probeInw = fProbeOutMC;
+   probeInw.ResetTrackingInfo();  // used default (pion) mass for tracking
+   if (outerReached<outerTracked) outerReached = outerTracked;
+   for (int ilr=outerReached+1;ilr--;) {
+   R5Layer *lr = GetLayer(ilr);
+   if (!probeInw.PropagateToR(lr->GetRadius(), fBFieldG, kInward)) break;
+   Bool_t accZOK = lr->InZAcceptane(probeInw.GetZ());
+   if (!accZOK && !lr->IsDead()) {
+   probeInw.SetInnerChecked(lr->GetActiveID());
+   cl = lr->GetMCCluster();
+   if (cl->IsValid()) {
+   if (!probeInw.PropagateToCluster(cl,fBFieldG)) return kFALSE; // track was
+   not propagated to cluster frame lr->SetExtInward(&probeInw); // set
+   extrapolation errors if (!UpdateTrack(&probeInw, lr, cl)) break;
+   }
+   else {
+   lr->SetExtInward(&probeInw); // set extrapolation errors
+   }
+   }
 
-    probeInw.SetInnerChecked(lr->GetActiveID());
+   probeInw.SetInnerChecked(lr->GetActiveID());
 
-  }
-  */
+   }
+   */
   // calculate combined estimates
   for (int ilr = fNLayers; ilr--;) {
     R5Layer *lr = GetLayer(ilr);
@@ -1340,6 +1340,7 @@ const AliESDtrack *R5Detector::GetProbeTrackInwardAsESDTrack() {
   fESDtrack.SetITSClusterMap(itsPattShort);
   fESDtrack.SetTPCClusterMap(clMap);
   fESDtrack.SetTPCSharedMap(fakeMap);
+  fESDtrack.SetTRDNclusterdEdx((UChar_t)fNHitsAssigned);
 
   // transfer TOF info (if any)
   if (fProbeInward.GetIntegratedLength() > 0) {
@@ -1386,737 +1387,738 @@ void R5Detector::AddESDTrackToEvent(AliESDEvent *esdEv,
 /*
 
 
-//________________________________________________________________________________
-Bool_t R5Detector::SolveSingleTrack(Double_t mass, Double_t pt, Double_t eta,
-Double_t phi, Double_t xv, Double_t yv, Double_t zv, int charge)
-{
-  // analytic and fullMC of track with given kinematics.
-  //
-  // prepare kalman track
-  R5Probe* probe = PrepareKalmanTrack(pt,eta,mass,charge,phi,xv,yv,zv);
+ //________________________________________________________________________________
+ Bool_t R5Detector::SolveSingleTrack(Double_t mass, Double_t pt, Double_t eta,
+ Double_t phi, Double_t xv, Double_t yv, Double_t zv, int charge)
+ {
+ // analytic and fullMC of track with given kinematics.
+ //
+ // prepare kalman track
+ R5Probe* probe = PrepareKalmanTrack(pt,eta,mass,charge,phi,xv,yv,zv);
 
-  SolveSingleTrackAnalytically();
-  if (!SolveSingleTrackViaKalman(mass,pt,eta)) return kFALSE;
-  //
-  // Store non-updated track errors of inward propagated seed >>>>>>>>
-  int maxLr = fLastActiveITSLayer + offset;
-  if (maxLr >= fLastActiveLayerTracked-1) maxLr = fLastActiveLayerTracked;
-  R5Probe probeTmp = fProbeInMC0; // original probe at vertex
-  R5Layer* lr = 0;
-  for (Int_t j=1; j<=maxLr; j++) {
-    lr = GetLayer(j);
-    //    printf("Here0: %d\n",j);
-    if (!PropagateToLayer(&probeTmp,lr,1)) return 0;
-    if (j!=maxLr) if (!probeTmp.CorrectForMeanMaterial(lr, kFALSE)) return 0;
-    //    printf("Prelim. Err at lr:%8s | %7.3f
-%7.3f\n",lr->GetName(),TMath::Sqrt(probeTmp.GetSigmaY2()),TMath::Sqrt(probeTmp.GetSigmaZ2()));
-  }
-  for (Int_t j=maxLr; j>0; j--) {
-    lr = GetLayer(j);
-    //    printf("Here1: %d\n",j);
-    if (j!=maxLr) if (!PropagateToLayer(&probeTmp,lr,-1)) return 0;
-    lr->fSig2EstD = probeTmp.GetSigmaY2();
-    lr->fSig2EstZ = probeTmp.GetSigmaZ2();
-    //    probeTmp.Print("l");
-    printf("Natural Err at lr:%8s | %7.3f
-%7.3f\n",lr->GetName(),TMath::Sqrt(lr->fSig2EstD),TMath::Sqrt(lr->fSig2EstZ));
-    if (!probeTmp.CorrectForMeanMaterial(lr, kTRUE)) return 0;
-  }
-  // Store non-updated track errors of inward propagated seed <<<<<<<<
-  //
-  int nsm = sumArr ? sumArr->GetEntriesFast() : 0;
-  R5Layer* vtx = GetLayer(0);
-  //
-  for (int i=0;i<nsm;i++) {
-    R5TrackSummary* tsm = (R5TrackSummary*)sumArr->At(i);
-    if (!tsm) continue;
-    tsm->SetRefProbeInMC0( GetProbeTrack() ); // attach reference track
-(generated) tsm->SetAnProbe( vtx->GetAnProbe() ); // attach analitycal solution
-  }
-  //
-  TStopwatch sw;
-  sw.Start();
-  for (int it=0;it<nMC;it++) {
-    printf("ev: %d\n",it);
-    SolveSingleTrackViaKalmanMC(offset);
-    R5Probe* trc = vtx->GetWinnerMCTrack();
-    vtx->GetMCTracks()->Print();
-    if (progressP==1 || (progressP>0 &&  (it%progressP)==0)) {
-      printf("%d%% done |",it*100/nMC);
-      sw.Stop(); sw.Print(); sw.Start(kFALSE);
-    }
-    for (int ism=nsm;ism--;) { // account the track in each of summaries
-      R5TrackSummary* tsm = (R5TrackSummary*)sumArr->At(ism);
-      if (!tsm) continue;
-      tsm->AddUpdCalls(GetUpdCalls());
-      tsm->AddTrack(trc);
-    }
-  }
-  //
-  sw.Stop();
-  printf("Total time: "); sw.Print();
-  return kTRUE;
-}
-
-
-
-//________________________________________________________________________________
-R5Probe* R5Detector::KalmanSmooth(int actLr, int actMin,int actMax) const
-{
-  // estimate kalman smoothed track params at given active lr
-  // from fit at layers actMin:actMax (excluding actLr)
-  // SolveSingleTrackViaKalman must have been called before
-  //
-  if (actMin>actMax) swap(actMin,actMax);
-  if (actMax>=fNActiveLayers) actMax = fNActiveLayers-1;
-  int nlrfit = actMax-actMin;
-  if (actLr>=actMin && actLr<=actMax) nlrfit-=1;
-  if (nlrfit<2) {AliInfo("Need a least 2 active layers in the fit"); return 0;}
-  static R5Probe iwd,owd;
-  //
-  // find phisical layer id's
-  int pLr  = GetLayerID(actLr);
-  int pMin = GetLayerID(actMin);
-  int pMax = GetLayerID(actMax);
-  //
-  //  printf(">>> %d %d %d\n",pLr, pMin,pMax);
-  Bool_t useIwd=kFALSE, useOwd=kFALSE;
-  if (pLr<pMax) { // need inward piece
-    iwd = GetLayer(pMax)->fTrCorr;
-    iwd.ResetCovMat();
-    iwd.GetHitsPatt() = 0;
-    for (int i=pMax;i>=pLr;i--) {
-      R5Layer* lr = GetLayer(i);
-      //      printf("IWD %d\n",i);
-      if (!lr->IsDead() && i!=pLr && i>=pMin) if
-(!UpdateTrack(&iwd,lr,&lr->fClCorr))  return 0; if (i!=pLr) { if
-(!iwd.CorrectForMeanMaterial(lr,kTRUE)) return 0; // correct for materials of
-this layer if (!PropagateToLayer(&iwd,GetLayer(i-1),-1)) return 0;      //
-propagate to next layer
-      }
-      //  printf("IWD%d:  ",i); iwd.Print("l");
-    }
-    useIwd = kTRUE;
-  }
-  if (pLr>pMin) { // need outward piece
-    owd = GetLayer(pMin)->fTrCorr;
-    owd.ResetCovMat();
-    owd.GetHitsPatt() = 0;
-    for (int i=pMin;i<=pLr;i++) {
-      R5Layer* lr = GetLayer(i);
-      //      printf("OWD %d\n",i);
-      if (!lr->IsDead() && i!=pLr && i<=pMax) if
-(!UpdateTrack(&owd,lr,&lr->fClCorr))  return 0; if (i!=pLr) { if
-(!owd.CorrectForMeanMaterial(lr,0)) return 0; // correct for materials of this
-layer if (!PropagateToLayer(&owd,GetLayer(i+1), 1)) return 0;      // propagate
-to next layer
-      }
-      //      printf("OWD%d:  ",i); owd.Print("l");
-    }
-    useOwd = kTRUE;
-  }
-  //
-  // was this extrapolation outside the fit range?
-  if (!useIwd) return (R5Probe*)&owd;
-  if (!useOwd) return (R5Probe*)&iwd;
-  //
-  // weight both tracks
-  if (!iwd.Propagate(owd.GetAlpha(),owd.GetX(),fBFieldG)) return 0;
-  Double_t meas[2] = {owd.GetY(),owd.GetZ()};
-  Double_t measErr2[3] = {owd.GetSigmaY2(), owd.GetSigmaZY(), owd.GetSigmaZ2()};
-  //  printf("Weighting\n");
-  //  owd.Print("l");
-  //  iwd.Print("l");
-  if (!iwd.AliExternalTrackParam::Update(meas,measErr2)) return 0;
-  iwd.GetHitsPatt() |= owd.GetHitsPatt();
-
-  //  printf("->\n");
-  //  iwd.Print("l");
-
-  return (R5Probe*)&iwd;
-  //
-}
-
-//________________________________________________________________________________
-R5Probe* R5Detector::KalmanSmoothFull(int actLr, int actMin,int actMax) const
-{
-  // estimate kalman smoothed track params at given active lr
-  // from fit at layers actMin:actMax (excluding actLr)
-  // SolveSingleTrackViaKalman must have been called before
-  //
-  static TClonesArray prediction("R5Probe",10);
-  static TClonesArray update("R5Probe",10);
-  static R5Probe res;
-  //
-  if (actMin>actMax) swap(actMin,actMax);
-  int nlrfit = actMax-actMin;
-  if (actLr>=actMin && actLr<=actMax) nlrfit-=1;
-  if (nlrfit<2) {AliInfo("Need a least 2 active layers in the fit"); return 0;}
-  //
-  // find phisical layer id's
-  int pLr  = GetLayerID(actLr);
-  int pMin = GetLayerID(actMin);
-  int pMax = GetLayerID(actMax);
-  //
-  int dir=0,dirInt=0;
-  if      (pLr<=pMin) dir=-1; // inward extrapolation
-  else if (pLr>=pMax) dir= 1; // outward extrapolation
-  else if (actMax-actLr >= actLr-actMin) dirInt = -1; // inward  interpolation
-(the test point is closer to inner layer) else    dirInt = 1; // outward
-interpolation (the test point is closer to outer layer)
-  //
-  if (dir!=0) { // no sens to do smoothing: simple Kalman filtering
-extrapolation int start = dir<0 ? pMax : pMin; res = GetLayer(start)->fTrCorr;
-    res.ResetCovMat();
-    R5Layer* lr = 0;
-    for (int i=(dir<0?pMax:pMin); i!=pLr; i+=dir) { // track till nearest layer
-to pLr lr = GetLayer(i); if (!lr->IsDead() && !(i<pMin ||i>pMax)) if
-(!UpdateTrack(&res,lr,&lr->fClCorr))  return 0; // update only with layers in
-fit range if (!res.CorrectForMeanMaterial(lr,dir<0 ? kTRUE:kFALSE))   return 0;
-// correct for materials of this layer if
-(!PropagateToLayer(&res,GetLayer(i+dir),dir))            return 0; // propagate
-to next layer
-    }
-    if (!res.CorrectForMeanMaterial(lr,dir<0 ? kTRUE:kFALSE))   return 0; //
-correct for materials of this nearest layer if
-(!PropagateToLayer(&res,GetLayer(pLr), dir)) return 0; // propagate to test
-layer return (R5Probe*)&res;
-  }
-  //
-  // too bad, need to do real filtering
-  //
-  int start = dirInt<0 ? pMax : pMin;
-  int stop  = dirInt<0 ? pMin-1 : pMax+1;
-  res = GetLayer(start)->fTrCorr;
-  res.ResetCovMat();
-  R5Layer* lr = 0;
-  int count = 0;
-  for (int i=start; i!=stop; i+=dirInt) { // track in full range, storing
-updates and predictions new(prediction[count]) R5Probe(res); lr = GetLayer(i);
-    if (!lr->IsDead() && i!=pLr) if (!UpdateTrack(&res,lr,&lr->fClCorr))  return
-0; // update only with layers in fit range new(update[count]) R5Probe(res); if
-(!res.CorrectForMeanMaterial(lr,dir<0 ? kTRUE:kFALSE))   return 0; // correct
-for materials of this layer if (!PropagateToLayer(&res,GetLayer(i+dir),dir))
-return 0; // propagate to next layer count++;
-  }
-  return (R5Probe*)&res;
-  //
-}
-
-//________________________________________________________________________________
-Bool_t R5Detector::SolveSingleTrackViaKalman(Double_t mass, Double_t pt,
-Double_t eta)
-{
-  // analytical estimate of tracking resolutions
-  //  fProbeInMC0.SetUseLogTermMS(kTRUE);
-  //
-  if (fMinITSHits>fNActiveITSLayers) {fMinITSHits = fNActiveITSLayers;
-printf("Redefined request of min N ITS hits to %d\n",fMinITSHits);} if
-(TMath::Abs(eta)<1e-3) fDensFactorEta = 1.; else { fDensFactorEta =
-TMath::Tan( 2.*TMath::ATan(TMath::Exp(-TMath::Abs(eta))) ); fDensFactorEta
-= 1./TMath::Sqrt( 1. + 1./fDensFactorEta/fDensFactorEta);
-  }
-  Double_t lambda = TMath::Pi()/2.0 - 2.0*TMath::ATan(TMath::Exp(-eta));
-  R5Probe* probe = PrepareKalmanTrack(pt,lambda,mass,-1);
-  if (!probe) return kFALSE;
-  //
-  R5Layer *lr = 0;
-  //
-  //
-  // Start the track fitting
---------------------------------------------------------
-  //
-  // Back-propagate the covariance matrix along the track.
-  // Kalman loop over the layers
-  //
-  R5Probe* currTr = 0;
-  lr = (R5Layer*)fLayers.At(fLastActiveLayerTracked);
-  lr->fTrCorr = *probe;
-  delete probe; // rethink...
-  //
-  for (Int_t j=fLastActiveLayerTracked; j--; ) {  // Layer loop
-    //
-    R5Layer *lrP = lr;
-    lr = (R5Layer*)fLayers.At(j);
-    //
-    lr->fTrCorr = lrP->fTrCorr;
-    currTr = &lr->fTrCorr;
-    currTr->ResetHit(lrP->GetActiveID());
-    //
-    // if there was a measurement on prev layer, update the track
-    if (!lrP->IsDead()) { // include measurement
-      R5Cluster cl(currTr->GetY(),currTr->GetZ(), currTr->GetX(),
-currTr->GetAlpha()); if (!UpdateTrack(currTr,lrP,&cl))  return kFALSE;
-    }
-    if (!currTr->CorrectForMeanMaterial(lrP,kTRUE)) return kFALSE; // correct
-for materials of this layer if (!PropagateToLayer(currTr,lr,-1)) return kFALSE;
-// propagate to current layer
-    //
-  } // end loop over layers
-  //
-  return kTRUE;
-}
-
-//____________________________________________________________
-Bool_t R5Detector::SolveSingleTrackViaKalmanMC(int offset)
-{
-  // MC estimate of tracking resolutions/effiencies. Requires that the
-SolveSingleTrackViaKalman
-  // was called before, since it uses data filled by this method
-  //
-  // The MC tracking will be done starting from fLastActiveITSLayer + offset
-(before analytical estimate will be used)
-  //
-  // At this point, the fProbeInMC0 contains the track params generated at
-vertex.
-  // Clone it and propagate to target layer to generate hit positions affected
-by MS
-  //
-  fUpdCalls = 0.;
-  R5Probe *currTrP=0,*currTr=0;
-  int maxLr = fLastActiveITSLayer + offset;
-  if (maxLr >= fLastActiveLayerTracked-1) maxLr = fLastActiveLayerTracked;
-  ResetMCTracks(maxLr);
-  R5Layer* lr = (R5Layer*)fLayers.At(maxLr);
-  currTr = lr->AddMCTrack(&fProbeInMC0); // start with original track at vertex
-  //
-  if (!TransportKalmanTrackWithMS(currTr, maxLr)) return kFALSE; // transport it
-to outermost layer where full MC is done
-  //
-  if (fLastActiveITSLayer<fLastActiveLayerTracked) { // prolongation from TPC
-    // start from correct track propagated from above till maxLr
-    Double_t *covMS = (Double_t*)currTr->GetCovariance();
-    const Double_t *covIdeal =lr->fTrCorr.GetCovariance();
-    for (int i=15;i--;) covMS[i] = covIdeal[i];
-  }
-  else { // ITS SA: randomize the starting point
-    //    Double_t *pars = (Double_t*)currTr->GetParameter();
-    //    pars[0] += gRandom->Gaus(0,TMath::Sqrt(currTr->GetSigmaY2()));
-    //    pars[1] += gRandom->Gaus(0,TMath::Sqrt(currTr->GetSigmaZ2()));
-    //
-    currTr->ResetCovMat();
-  }
-  //
-  for (Int_t j=maxLr; j--; ) {  // Layer loop
-    //
-    R5Layer *lrP = lr;
-    lr = (R5Layer*)fLayers.At(j);
-    int ntPrev = lrP->GetNMCTracks();
-    //
-    if (lrP->IsDead()) { // for passive layer just propagate the copy of all
-tracks of prev layer >>> for (int itrP=ntPrev;itrP--;) { // loop over all tracks
-from previous layer currTrP = lrP->GetMCTrack(itrP); if (currTrP->IsKilled())
-continue; currTr = lr->AddMCTrack( currTrP ); if
-(!currTr->CorrectForMeanMaterial(lrP,kTRUE)) {currTr->Kill(); continue;} //
-correct for materials of prev. layer if (!PropagateToLayer(currTr,lr,-1))
-{currTr->Kill(); continue;} // propagate to current layer
-      }
-      continue;
-    } // treatment of dead layer <<<
-    //
-    if (lrP->IsTPC()) { // we don't consider bg hits in TPC, just update with MC
-cluster for (int itrP=ntPrev;itrP--;) { // loop over all tracks from previous
-layer currTrP = lrP->GetMCTrack(itrP); if (currTrP->IsKilled()) continue; currTr
-= lr->AddMCTrack( currTrP ); if (!UpdateTrack(currTr, lrP, lrP->GetMCCluster(),
-kTRUE)) {currTr->Kill(); continue;} // update with correct MC cl. if
-(!currTr->CorrectForMeanMaterial(lrP,kTRUE)) {currTr->Kill(); continue;} //
-correct for materials of prev. layer if (!PropagateToLayer(currTr,lr,-1))
-{currTr->Kill(); continue;} // propagate to current layer
-      }
-      continue;
-    } // treatment of ideal (TPC?) layer <<<
-    //
-    // active layer under eff. study (ITS?): propagate copy of every track to MC
-cluster frame (to have them all in the same frame)
-    // and calculate the limits of bg generation
-    R5Cluster* clMC = lrP->GetMCCluster();
-    if (lrP->GetLayerEff()<gRandom->Rndm()) clMC->Kill(); // simulate
-inefficiency ResetSearchLimits(); int nseeds = 0; for (int itrP=ntPrev;itrP--;)
-{ // loop over all tracks from previous layer currTrP = lrP->GetMCTrack(itrP);
-if (currTrP->IsKilled()) continue; currTr = lr->AddMCTrack( currTrP ); if
-(!currTr->PropagateToCluster(clMC,fBFieldG)) {currTr->Kill(); continue;} // go
-to MC cluster if ( !(currTr->GetNITSHits()>0 &&
-currTr->GetNITSHits()==currTr->GetNFakeITSHits()) ) UpdateSearchLimits(currTr,
-lrP); // RS nseeds++;
-    }
-    //
-    //    printf("%3d seeds\n",nseeds);
-    if (fUseBackground && lrP->IsITS()) GenBgClusters(lrP); //  generate
-background hits
-    //
-    ntPrev = lr->GetNMCTracks();
-    for (int itr=ntPrev;itr--;) { // loop over all tracks PROPAGATED from
-previous layer to clusters frame on previous layer currTrP =
-lr->GetMCTrack(itr); // this is a seed from prev layer. The new clusters are
-attached to its copies, the seed itself
-                                     // will be propagated w/o cluster update if
-it does not violate requested "reconstructed" track settings if
-(currTrP->IsKilled()) continue;
-      //printf("Check    %d %p %d\n",itr,currTrP,currTrP->GetUniqueID());
-currTrP->Print(); CheckTrackProlongations(currTrP, lr, lrP); if
-(NeedToKill(currTrP)) currTrP->Kill(); // kill track which was not updated at
-lrP
-      //currTrP->Kill(); // kill track which was not updated at lrP
-    }
-    //
-    lr->GetMCTracks()->Sort();
-    int ntTot = lr->GetNMCTracks(); // propagate max amount of allowed tracks to
-current layer if (ntTot>fMaxSeedToPropagate && fMaxSeedToPropagate>0) { for (int
-itr=ntTot;itr>=fMaxSeedToPropagate;itr--)  lr->GetMCTracks()->RemoveAt(itr);
-      ntTot = fMaxSeedToPropagate;
-    }
-    //
-    for (int itr=ntTot;itr--;) {
-      currTr = lr->GetMCTrack(itr);
-      if (!currTr->CorrectForMeanMaterial(lrP,kTRUE)) {currTr->Kill();continue;}
-// correct for materials of prev. layer if (!PropagateToLayer(currTr,lr,-1))
-{currTr->Kill();continue;} // propagate to current layer
-    }
-    AliDebug(1,Form("Got %d tracks on layer %s",ntTot,lr->GetName()));
-    //    lr->GetMCTracks()->Print();
-    //
-  } // end loop over layers
-  //
-  // do we use vertex constraint?
-  R5Layer *vtx = GetLayer(0);
-  if (!vtx->IsDead() && vtx->IsITS()) {
-    int ntr = vtx->GetNMCTracks();
-    for (int itr=0;itr<ntr;itr++) {
-      currTr = vtx->GetMCTrack(itr);
-      if (currTr->IsKilled()) continue;
-      R5Cluster* clv = vtx->GetMCCluster();
-      Double_t meas[2] = {clv->GetY(),clv->GetZ()};
-      Double_t measErr2[3] =
-{vtx->fPhiRes*vtx->fPhiRes,0,vtx->fZRes*vtx->fZRes}; Double_t chi2v =
-currTr->AliExternalTrackParam::GetPredictedChi2(meas,measErr2);
-      currTr->AddHit(vtx->GetActiveID(), chi2v, -1);
-      currTr->SetInnerLrChecked(vtx->GetActiveID());
-      if (NeedToKill(currTr)) currTr->Kill();
-      // if (vtx->IsITS()) {if (!UpdateTrack(currTr, vtx, vtx->GetMCCluster(),
-kFALSE)) {currTr->Kill();continue;}}
-    }
-  }
-  EliminateUnrelated();
-
-  return kTRUE;
-}
+ SolveSingleTrackAnalytically();
+ if (!SolveSingleTrackViaKalman(mass,pt,eta)) return kFALSE;
+ //
+ // Store non-updated track errors of inward propagated seed >>>>>>>>
+ int maxLr = fLastActiveITSLayer + offset;
+ if (maxLr >= fLastActiveLayerTracked-1) maxLr = fLastActiveLayerTracked;
+ R5Probe probeTmp = fProbeInMC0; // original probe at vertex
+ R5Layer* lr = 0;
+ for (Int_t j=1; j<=maxLr; j++) {
+ lr = GetLayer(j);
+ //    printf("Here0: %d\n",j);
+ if (!PropagateToLayer(&probeTmp,lr,1)) return 0;
+ if (j!=maxLr) if (!probeTmp.CorrectForMeanMaterial(lr, kFALSE)) return 0;
+ //    printf("Prelim. Err at lr:%8s | %7.3f
+ %7.3f\n",lr->GetName(),TMath::Sqrt(probeTmp.GetSigmaY2()),TMath::Sqrt(probeTmp.GetSigmaZ2()));
+ }
+ for (Int_t j=maxLr; j>0; j--) {
+ lr = GetLayer(j);
+ //    printf("Here1: %d\n",j);
+ if (j!=maxLr) if (!PropagateToLayer(&probeTmp,lr,-1)) return 0;
+ lr->fSig2EstD = probeTmp.GetSigmaY2();
+ lr->fSig2EstZ = probeTmp.GetSigmaZ2();
+ //    probeTmp.Print("l");
+ printf("Natural Err at lr:%8s | %7.3f
+ %7.3f\n",lr->GetName(),TMath::Sqrt(lr->fSig2EstD),TMath::Sqrt(lr->fSig2EstZ));
+ if (!probeTmp.CorrectForMeanMaterial(lr, kTRUE)) return 0;
+ }
+ // Store non-updated track errors of inward propagated seed <<<<<<<<
+ //
+ int nsm = sumArr ? sumArr->GetEntriesFast() : 0;
+ R5Layer* vtx = GetLayer(0);
+ //
+ for (int i=0;i<nsm;i++) {
+ R5TrackSummary* tsm = (R5TrackSummary*)sumArr->At(i);
+ if (!tsm) continue;
+ tsm->SetRefProbeInMC0( GetProbeTrack() ); // attach reference track (generated)
+ tsm->SetAnProbe( vtx->GetAnProbe() ); // attach analitycal solution
+ }
+ //
+ TStopwatch sw;
+ sw.Start();
+ for (int it=0;it<nMC;it++) {
+ printf("ev: %d\n",it);
+ SolveSingleTrackViaKalmanMC(offset);
+ R5Probe* trc = vtx->GetWinnerMCTrack();
+ vtx->GetMCTracks()->Print();
+ if (progressP==1 || (progressP>0 &&  (it%progressP)==0)) {
+ printf("%d%% done |",it*100/nMC);
+ sw.Stop(); sw.Print(); sw.Start(kFALSE);
+ }
+ for (int ism=nsm;ism--;) { // account the track in each of summaries
+ R5TrackSummary* tsm = (R5TrackSummary*)sumArr->At(ism);
+ if (!tsm) continue;
+ tsm->AddUpdCalls(GetUpdCalls());
+ tsm->AddTrack(trc);
+ }
+ }
+ //
+ sw.Stop();
+ printf("Total time: "); sw.Print();
+ return kTRUE;
+ }
 
 
 
-//____________________________________________________________________________
-Int_t R5Detector::GenBgClusters(R5Layer* lr)
-{
-  // Generate fake clusters in precalculated RPhi,Z range
-  if (fNBgLimits<1) return 0; // limits were not set - no track was prolongated
-  //
-  // Fix search limits to avoid seeds which will anyway point very far from the
-vertex Double_t tolY = TMath::Sqrt(lr->fSig2EstD)*fMaxChi2ClSQ; Double_t tolZ =
-TMath::Sqrt(lr->fSig2EstZ)*fMaxChi2ClSQ;
+ //________________________________________________________________________________
+ R5Probe* R5Detector::KalmanSmooth(int actLr, int actMin,int actMax) const
+ {
+ // estimate kalman smoothed track params at given active lr
+ // from fit at layers actMin:actMax (excluding actLr)
+ // SolveSingleTrackViaKalman must have been called before
+ //
+ if (actMin>actMax) swap(actMin,actMax);
+ if (actMax>=fNActiveLayers) actMax = fNActiveLayers-1;
+ int nlrfit = actMax-actMin;
+ if (actLr>=actMin && actLr<=actMax) nlrfit-=1;
+ if (nlrfit<2) {AliInfo("Need a least 2 active layers in the fit"); return 0;}
+ static R5Probe iwd,owd;
+ //
+ // find phisical layer id's
+ int pLr  = GetLayerID(actLr);
+ int pMin = GetLayerID(actMin);
+ int pMax = GetLayerID(actMax);
+ //
+ //  printf(">>> %d %d %d\n",pLr, pMin,pMax);
+ Bool_t useIwd=kFALSE, useOwd=kFALSE;
+ if (pLr<pMax) { // need inward piece
+ iwd = GetLayer(pMax)->fTrCorr;
+ iwd.ResetCovMat();
+ iwd.GetHitsPatt() = 0;
+ for (int i=pMax;i>=pLr;i--) {
+ R5Layer* lr = GetLayer(i);
+ //      printf("IWD %d\n",i);
+ if (!lr->IsDead() && i!=pLr && i>=pMin) if (!UpdateTrack(&iwd,lr,&lr->fClCorr))
+ return 0; if (i!=pLr) { if (!iwd.CorrectForMeanMaterial(lr,kTRUE)) return 0; //
+ correct for materials of this layer if
+ (!PropagateToLayer(&iwd,GetLayer(i-1),-1)) return 0;      // propagate to next
+ layer
+ }
+ //  printf("IWD%d:  ",i); iwd.Print("l");
+ }
+ useIwd = kTRUE;
+ }
+ if (pLr>pMin) { // need outward piece
+ owd = GetLayer(pMin)->fTrCorr;
+ owd.ResetCovMat();
+ owd.GetHitsPatt() = 0;
+ for (int i=pMin;i<=pLr;i++) {
+ R5Layer* lr = GetLayer(i);
+ //      printf("OWD %d\n",i);
+ if (!lr->IsDead() && i!=pLr && i<=pMax) if (!UpdateTrack(&owd,lr,&lr->fClCorr))
+ return 0; if (i!=pLr) { if (!owd.CorrectForMeanMaterial(lr,0)) return 0; //
+ correct for materials of this layer if (!PropagateToLayer(&owd,GetLayer(i+1),
+ 1)) return 0;      // propagate to next layer
+ }
+ //      printf("OWD%d:  ",i); owd.Print("l");
+ }
+ useOwd = kTRUE;
+ }
+ //
+ // was this extrapolation outside the fit range?
+ if (!useIwd) return (R5Probe*)&owd;
+ if (!useOwd) return (R5Probe*)&iwd;
+ //
+ // weight both tracks
+ if (!iwd.Propagate(owd.GetAlpha(),owd.GetX(),fBFieldG)) return 0;
+ Double_t meas[2] = {owd.GetY(),owd.GetZ()};
+ Double_t measErr2[3] = {owd.GetSigmaY2(), owd.GetSigmaZY(), owd.GetSigmaZ2()};
+ //  printf("Weighting\n");
+ //  owd.Print("l");
+ //  iwd.Print("l");
+ if (!iwd.AliExternalTrackParam::Update(meas,measErr2)) return 0;
+ iwd.GetHitsPatt() |= owd.GetHitsPatt();
 
-  //  printf("Before: Y: %+6.3f : %+6.3f tolY: %6.3f || Z: %+6.3f : %+6.3f tolZ:
-%6.3f\n",fBgYMin,fBgYMax,tolY, fBgZMin,fBgZMax,tolZ); if (fBgYMin <
-lr->fClCorr.fY-tolY) fBgYMin = lr->fClCorr.fY-tolY; if (fBgYMax >
-lr->fClCorr.fY+tolY) fBgYMax = lr->fClCorr.fY+tolY; if (fBgZMin <
-lr->fClCorr.fZ-tolZ) fBgZMin = lr->fClCorr.fZ-tolZ; if (fBgZMax >
-lr->fClCorr.fZ+tolZ) fBgZMax = lr->fClCorr.fZ+tolZ;
-  //printf("After: Y: %+6.3f : %+6.3f tolY: %6.3f || Z: %+6.3f : %+6.3f tolZ:
-%6.3f\n",fBgYMin,fBgYMax,tolY, fBgZMin,fBgZMax,tolZ);
-  //
-  Double_t dy = fBgYMax - fBgYMin;
-  Double_t dz = fBgZMax - fBgZMin;
-  Double_t surf = dy*dz;               // surface of generation
-  if (surf<0) return 0;
-  Double_t poissProb = surf*HitDensity(lr->fR)*lr->GetLayerEff();
-  AliDebug(2,Form("Bg for Lr %s (r=%.2f) : Density %.2f on surface %.2e [%+.4f :
-%+.4f][%+.4f %+.4f]",
-                  lr->GetName(),lr->fR,HitDensity(lr->fR),surf,fBgYMin,fBgYMax,fBgZMin,fBgZMax));
-  int nFakesGen = gRandom->Poisson( poissProb ); // preliminary number of extra
-clusters to test R5Cluster *refCl = lr->GetMCCluster(); Double_t sig2y =
-lr->GetPhiRes()*lr->GetPhiRes(); Double_t sig2z = lr->GetZRes()*lr->GetZRes();
-  for (int ic=nFakesGen;ic--;) {
-    Double_t y = fBgYMin+dy*gRandom->Rndm();
-    Double_t z = fBgZMin+dz*gRandom->Rndm();
-    Double_t dfy = y-refCl->GetY();
-    Double_t dfz = z-refCl->GetZ();
-    Double_t dist = (dfy*dfy)/sig2y + (dfz*dfz)/sig2z;
-    if (dist<4) continue; // avoid overlap with MC cluster
-    lr->AddBgCluster(y, z, refCl->GetX(), refCl->GetPhi());
-  }
-  AliDebug(2,Form("Added %6d noise clusters on lr %s (poisson Prob=%8.2f for
-surface %.2e) DY:%7.4f DZ: %7.4f",
-                   lr->GetNBgClusters(),lr->GetName(),poissProb,surf,dy,dz));
-  return nFakesGen;
-  //
-}
+ //  printf("->\n");
+ //  iwd.Print("l");
 
-//____________________________________________________________________________
-void R5Detector::UpdateSearchLimits(R5Probe* probe, R5Layer* lr)
-{
-  // define the search window for track on layer (where the bg hist will be
-generated) static Double_t *currYMin = fBgYMinTr.GetArray(); static Double_t
-*currYMax = fBgYMaxTr.GetArray(); static Double_t *currZMin =
-fBgZMinTr.GetArray(); static Double_t *currZMax = fBgZMaxTr.GetArray();
-  //
-  Double_t sizeY = probe->GetSigmaY2(), sizeZ = probe->GetSigmaZ2();
-  //
-  //  if (sizeY>2) sizeY=2;
-  //  if (sizeZ>2) sizeZ=2;
-  //  printf("Sizes at %s: %.5f %.5f\n",lr->GetName(), sizeY,sizeZ);
-  //
-  if (fNBgLimits>=fBgYMinTr.GetSize()) { // expand arrays, update pointers
-    fBgYMinTr.Set(2*(fNBgLimits+1));
-    fBgYMaxTr.Set(2*(fNBgLimits+1));
-    fBgZMinTr.Set(2*(fNBgLimits+1));
-    fBgZMaxTr.Set(2*(fNBgLimits+1));
-    currYMin = fBgYMinTr.GetArray();
-    currYMax = fBgYMaxTr.GetArray();
-    currZMin = fBgZMinTr.GetArray();
-    currZMax = fBgZMaxTr.GetArray();
-  }
-  if (fBgYMin > (currYMin[fNBgLimits]=probe->GetY()-sizeY) ) fBgYMin =
-currYMin[fNBgLimits]; if (fBgYMax < (currYMax[fNBgLimits]=probe->GetY()+sizeY) )
-fBgYMax = currYMax[fNBgLimits]; if (fBgZMin >
-(currZMin[fNBgLimits]=probe->GetZ()-sizeZ) ) fBgZMin = currZMin[fNBgLimits]; if
-(fBgZMax < (currZMax[fNBgLimits]=probe->GetZ()+sizeZ) ) fBgZMax =
-currZMax[fNBgLimits]; if (AliLog::GetGlobalDebugLevel()>=2) { probe->Print("l");
-    AliInfo(Form("Seed%3d Lr %s limits for y:%+8.4f z:%+8.4f [%+.4f :
-%+.4f][%+.4f
-%+.4f]",fNBgLimits,lr->GetName(),probe->GetY(),probe->GetZ(),currYMin[fNBgLimits],currYMax[fNBgLimits],currZMin[fNBgLimits],currZMax[fNBgLimits]));
-    AliInfo(Form("Global Limits Lr %s                            [%+.4f :
-%+.4f][%+.4f %+.4f]",lr->GetName(),fBgYMin,fBgYMax,fBgZMin,fBgZMax));
-    AliInfo(Form("MC Cluster: %+.4f : %+.4f",lr->fClMC.fY, lr->fClMC.fZ));
-  }
-  probe->SetUniqueID(fNBgLimits++);
-  //
-  if (lr->IsITS() && probe->GetNFakeITSHits()==0) {
-    if (fHMCLrResidRPhi) fHMCLrResidRPhi->Fill(probe->GetY() -
-lr->GetMCCluster()->GetY(), lr->GetActiveID()); if (fHMCLrResidZ)
-fHMCLrResidZ->Fill(probe->GetZ() -
-lr->GetMCCluster()->GetZ(),lr->GetActiveID());
-  }
-  //
-}
+ return (R5Probe*)&iwd;
+ //
+ }
 
-//____________________________________________________________________________
-void R5Detector::CheckTrackProlongations(R5Probe *probe, R5Layer* lr, R5Layer*
-lrP)
-{
-  // explore prolongation of probe from lrP to lr with all possible clusters of
-lrP
-  // the probe is already brought to clusters frame
-  int nCl = lrP->GetNBgClusters();
-  Double_t measErr2[3] = {lrP->fPhiRes*lrP->fPhiRes,0,lrP->fZRes*lrP->fZRes};
-  Double_t meas[2] = {0,0};
-  UInt_t tmpID = probe->GetUniqueID();
-  Double_t yMin = fBgYMinTr[tmpID];
-  Double_t yMax = fBgYMaxTr[tmpID];
-  Double_t zMin = fBgZMinTr[tmpID];
-  Double_t zMax = fBgZMaxTr[tmpID];
-  //
-  probe->SetInnerLrChecked(lrP->GetActiveID());
-  for (int icl=-1;icl<nCl;icl++) {
-    R5Cluster* cl = icl<0 ? lrP->GetMCCluster() : lrP->GetBgCluster(icl);  // -1
-is for true MC cluster if (cl->IsKilled()) { if
-(AliLog::GetGlobalDebugLevel()>1) {printf("Skip cluster %d ",icl); cl->Print();}
-      continue;
-    }
-    Double_t y = cl->GetY();
-    Double_t z = cl->GetZ();
-    AliDebug(2,Form("Check seed%d against cl#%d out of %d at layer %s | y:%+8.4f
-z:%+8.4f [%+.4f:%+.4f]
-[%+.4f:%+.4f]",tmpID,icl,nCl,lrP->GetName(),y,z,yMin,yMax,zMin,zMax)); if
-(AliLog::GetGlobalDebugLevel()>0) { if (icl==-1 && probe->GetNFakeITSHits()==0)
-{ meas[0] = y; meas[1] = z; Double_t chi2a =
-probe->AliExternalTrackParam::GetPredictedChi2(meas,measErr2); if
-(chi2a>fMaxChi2Cl || (y<yMin || y>yMax) || (z<zMin || z>zMax)) { probe->Print();
-          printf("Loosing good point (y:%+8.4f z:%+8.4f) on lr %s: chi2: %.2f  |
-dy:%+8.4f dz:%+8.4f [%+.4f:%+.4f]  [%+.4f:%+.4f] |x: %.2f %.2f | phi: %.2f
-%.2f\n",
-                 y,z,lrP->GetName(),chi2a,y-probe->GetY(),z-probe->GetZ(),yMin,yMax,zMin,zMax,
-probe->GetX(), cl->GetX(), probe->GetAlpha(), cl->GetPhi());
-        }
-      }
-    }
-    if (y<yMin || y>yMax) continue; // preliminary check on Y
-    if (z<zMin || z>zMax) continue; // preliminary check on Z
-    meas[0] = y; meas[1] = z;
-    Double_t chi2 =
-probe->AliExternalTrackParam::GetPredictedChi2(meas,measErr2); if (fHMCLrChi2 &&
-probe->GetNFakeITSHits()==0 && icl==-1)
-fHMCLrChi2->Fill(chi2,lrP->GetActiveID()); AliDebug(2,Form("Seed-to-cluster chi2
-= Chi2=%.2f",chi2)); if (chi2>fMaxChi2Cl) continue;
-    //
-    // update track copy
-    R5Probe* newTr = lr->AddMCTrack( probe );
-    fUpdCalls++;
-    if (!newTr->AliExternalTrackParam::Update(meas,measErr2)) {
-      AliDebug(2,Form("Layer %s: Failed to update the track by measurement
-{%.3f,%3f} err {%.3e %.3e %.3e}", lrP->GetName(),meas[0],meas[1],
-measErr2[0],measErr2[1],measErr2[2])); if (AliLog::GetGlobalDebugLevel()>1)
-newTr->Print("l"); newTr->Kill(); continue;
-    }
-    newTr->AddHit(lrP->GetActiveID(), chi2, icl);
-    if (AliLog::GetGlobalDebugLevel()>1) {
-      AliInfo("Cloned updated track is:");
-      newTr->Print();
-    }
-    if (NeedToKill(newTr)) newTr->Kill();
-  }
-  //
-}
+ //________________________________________________________________________________
+ R5Probe* R5Detector::KalmanSmoothFull(int actLr, int actMin,int actMax) const
+ {
+ // estimate kalman smoothed track params at given active lr
+ // from fit at layers actMin:actMax (excluding actLr)
+ // SolveSingleTrackViaKalman must have been called before
+ //
+ static TClonesArray prediction("R5Probe",10);
+ static TClonesArray update("R5Probe",10);
+ static R5Probe res;
+ //
+ if (actMin>actMax) swap(actMin,actMax);
+ int nlrfit = actMax-actMin;
+ if (actLr>=actMin && actLr<=actMax) nlrfit-=1;
+ if (nlrfit<2) {AliInfo("Need a least 2 active layers in the fit"); return 0;}
+ //
+ // find phisical layer id's
+ int pLr  = GetLayerID(actLr);
+ int pMin = GetLayerID(actMin);
+ int pMax = GetLayerID(actMax);
+ //
+ int dir=0,dirInt=0;
+ if      (pLr<=pMin) dir=-1; // inward extrapolation
+ else if (pLr>=pMax) dir= 1; // outward extrapolation
+ else if (actMax-actLr >= actLr-actMin) dirInt = -1; // inward  interpolation
+ (the test point is closer to inner layer) else    dirInt = 1; // outward
+ interpolation (the test point is closer to outer layer)
+ //
+ if (dir!=0) { // no sens to do smoothing: simple Kalman filtering extrapolation
+ int start = dir<0 ? pMax : pMin;
+ res = GetLayer(start)->fTrCorr;
+ res.ResetCovMat();
+ R5Layer* lr = 0;
+ for (int i=(dir<0?pMax:pMin); i!=pLr; i+=dir) { // track till nearest layer to
+ pLr lr = GetLayer(i); if (!lr->IsDead() && !(i<pMin ||i>pMax)) if
+ (!UpdateTrack(&res,lr,&lr->fClCorr))  return 0; // update only with layers in
+ fit range if (!res.CorrectForMeanMaterial(lr,dir<0 ? kTRUE:kFALSE))   return 0;
+ // correct for materials of this layer if
+ (!PropagateToLayer(&res,GetLayer(i+dir),dir))            return 0; // propagate
+ to next layer
+ }
+ if (!res.CorrectForMeanMaterial(lr,dir<0 ? kTRUE:kFALSE))   return 0; //
+ correct for materials of this nearest layer if
+ (!PropagateToLayer(&res,GetLayer(pLr), dir)) return 0; // propagate to test
+ layer return (R5Probe*)&res;
+ }
+ //
+ // too bad, need to do real filtering
+ //
+ int start = dirInt<0 ? pMax : pMin;
+ int stop  = dirInt<0 ? pMin-1 : pMax+1;
+ res = GetLayer(start)->fTrCorr;
+ res.ResetCovMat();
+ R5Layer* lr = 0;
+ int count = 0;
+ for (int i=start; i!=stop; i+=dirInt) { // track in full range, storing updates
+ and predictions new(prediction[count]) R5Probe(res); lr = GetLayer(i); if
+ (!lr->IsDead() && i!=pLr) if (!UpdateTrack(&res,lr,&lr->fClCorr))  return 0; //
+ update only with layers in fit range new(update[count]) R5Probe(res); if
+ (!res.CorrectForMeanMaterial(lr,dir<0 ? kTRUE:kFALSE))   return 0; // correct
+ for materials of this layer if (!PropagateToLayer(&res,GetLayer(i+dir),dir))
+ return 0; // propagate to next layer count++;
+ }
+ return (R5Probe*)&res;
+ //
+ }
 
-//____________________________________________________________________________
-Bool_t R5Detector::NeedToKill(R5Probe* probe) const
-{
-  // check if the seed at given layer (last one where update was tried)
-  // still has chances to be reconstructed
-  const Bool_t kModeKillMiss = kFALSE;
-  //
-  Bool_t kill = kFALSE;
-  while (1) {
-    int il = probe->GetInnerLayerChecked();
-    int nITS = probe->GetNITSHits();
-    int nITSMax = nITS + il; // maximum it can have
-    if (nITSMax<fMinITSHits) {
-      kill = kTRUE;
-      break;
-    }    // has no chance to collect enough ITS hits
-    //
-    int ngr = fPattITS.GetSize();
-    if (ngr>0) { // check pattern
-      UInt_t patt = probe->GetHitsPatt();
-      // complete the layers not checked yet
-      for (int i=il;i--;) patt |= (0x1<<i);
-      for (int ig=ngr;ig--;)
-        if (!(((UInt_t)fPattITS[ig]) & patt)) {
-          kill = kTRUE;
-          break;
-        }
-      //
-    }
-    //
-    if (nITS>2) {  // check if smallest possible norm chi2/ndf is acceptable
-      Double_t chi2min = probe->GetChi2();
-      if (kModeKillMiss) {
-        int nMiss = fNActiveITSLayers - probe->GetInnerLayerChecked() - nITS; //
-layers already missed chi2min = nMiss*probe->GetMissingHitPenalty();
-      }
-      chi2min /= ((nITSMax<<1)-R5Probe::kNDOF);
-      if (chi2min>fMaxNormChi2NDF) {
-        kill = kTRUE;
-        break;
-      }
-    }
-    //
-    // loose vertex constraint
-    Double_t dst;
-    if (nITS>=2) {
-      probe->GetZAt(0,fBFieldG,dst);
-      //printf("Zd (F%d): %f\n",probe->GetNFakeITSHits(),dst);
-      if (TMath::Abs(dst)>10.) {
-        kill = kTRUE;
-        break;
-      }
-    }
-    if (nITS>=3) {
-      probe->GetYAt(0,fBFieldG,dst);
-      //printf("Dd (F%d): %f\n",probe->GetNFakeITSHits(),dst);
-      if (TMath::Abs(dst)>10.) {
-        kill = kTRUE;
-        break;
-      }
-    }
-    //
-    break;
-  }
-  if (kill && AliLog::GetGlobalDebugLevel()>1 && probe->GetNFakeITSHits()==0) {
-    printf("Killing good seed, last upd layer was
-%d\n",probe->GetInnerLayerChecked()); probe->Print("l");
-  }
-  return kill;
-}
+ //________________________________________________________________________________
+ Bool_t R5Detector::SolveSingleTrackViaKalman(Double_t mass, Double_t pt,
+ Double_t eta)
+ {
+ // analytical estimate of tracking resolutions
+ //  fProbeInMC0.SetUseLogTermMS(kTRUE);
+ //
+ if (fMinITSHits>fNActiveITSLayers) {fMinITSHits = fNActiveITSLayers;
+ printf("Redefined request of min N ITS hits to %d\n",fMinITSHits);} if
+ (TMath::Abs(eta)<1e-3) fDensFactorEta = 1.; else { fDensFactorEta =
+ TMath::Tan( 2.*TMath::ATan(TMath::Exp(-TMath::Abs(eta))) ); fDensFactorEta
+ = 1./TMath::Sqrt( 1. + 1./fDensFactorEta/fDensFactorEta);
+ }
+ Double_t lambda = TMath::Pi()/2.0 - 2.0*TMath::ATan(TMath::Exp(-eta));
+ R5Probe* probe = PrepareKalmanTrack(pt,lambda,mass,-1);
+ if (!probe) return kFALSE;
+ //
+ R5Layer *lr = 0;
+ //
+ //
+ // Start the track fitting
+ --------------------------------------------------------
+ //
+ // Back-propagate the covariance matrix along the track.
+ // Kalman loop over the layers
+ //
+ R5Probe* currTr = 0;
+ lr = (R5Layer*)fLayers.At(fLastActiveLayerTracked);
+ lr->fTrCorr = *probe;
+ delete probe; // rethink...
+ //
+ for (Int_t j=fLastActiveLayerTracked; j--; ) {  // Layer loop
+ //
+ R5Layer *lrP = lr;
+ lr = (R5Layer*)fLayers.At(j);
+ //
+ lr->fTrCorr = lrP->fTrCorr;
+ currTr = &lr->fTrCorr;
+ currTr->ResetHit(lrP->GetActiveID());
+ //
+ // if there was a measurement on prev layer, update the track
+ if (!lrP->IsDead()) { // include measurement
+ R5Cluster cl(currTr->GetY(),currTr->GetZ(), currTr->GetX(),
+ currTr->GetAlpha()); if (!UpdateTrack(currTr,lrP,&cl))  return kFALSE;
+ }
+ if (!currTr->CorrectForMeanMaterial(lrP,kTRUE)) return kFALSE; // correct for
+ materials of this layer if (!PropagateToLayer(currTr,lr,-1)) return kFALSE; //
+ propagate to current layer
+ //
+ } // end loop over layers
+ //
+ return kTRUE;
+ }
 
-//_____________________________________________________________________
-void R5Detector::EliminateUnrelated()
-{
-  // kill useless tracks
-  R5Layer* lr = GetLayer(0);
-  int ntr = lr->GetNMCTracks();
-  int nval = 0;
-  for (int itr=0;itr<ntr;itr++) {
-    R5Probe* probe = lr->GetMCTrack(itr);
-    if (probe->IsKilled()) continue;
-    if (probe->GetNITSHits()-probe->GetNFakeITSHits()<1) {probe->Kill();
-continue;} nval++;
-  }
-  lr->GetMCTracks()->Sort();
-  const int kDump = 0;
-  if (kDump>0) {
-    printf("Valid %d out of %d\n",nval, ntr);
-    ntr = ntr>kDump ? kDump:0;
-    for (int itr=0;itr<ntr;itr++) {
-      lr->GetMCTrack(itr)->Print();
-    }
-  }
-}
+ //____________________________________________________________
+ Bool_t R5Detector::SolveSingleTrackViaKalmanMC(int offset)
+ {
+ // MC estimate of tracking resolutions/effiencies. Requires that the
+ SolveSingleTrackViaKalman
+ // was called before, since it uses data filled by this method
+ //
+ // The MC tracking will be done starting from fLastActiveITSLayer + offset
+ (before analytical estimate will be used)
+ //
+ // At this point, the fProbeInMC0 contains the track params generated at
+ vertex.
+ // Clone it and propagate to target layer to generate hit positions affected by
+ MS
+ //
+ fUpdCalls = 0.;
+ R5Probe *currTrP=0,*currTr=0;
+ int maxLr = fLastActiveITSLayer + offset;
+ if (maxLr >= fLastActiveLayerTracked-1) maxLr = fLastActiveLayerTracked;
+ ResetMCTracks(maxLr);
+ R5Layer* lr = (R5Layer*)fLayers.At(maxLr);
+ currTr = lr->AddMCTrack(&fProbeInMC0); // start with original track at vertex
+ //
+ if (!TransportKalmanTrackWithMS(currTr, maxLr)) return kFALSE; // transport it
+ to outermost layer where full MC is done
+ //
+ if (fLastActiveITSLayer<fLastActiveLayerTracked) { // prolongation from TPC
+ // start from correct track propagated from above till maxLr
+ Double_t *covMS = (Double_t*)currTr->GetCovariance();
+ const Double_t *covIdeal =lr->fTrCorr.GetCovariance();
+ for (int i=15;i--;) covMS[i] = covIdeal[i];
+ }
+ else { // ITS SA: randomize the starting point
+ //    Double_t *pars = (Double_t*)currTr->GetParameter();
+ //    pars[0] += gRandom->Gaus(0,TMath::Sqrt(currTr->GetSigmaY2()));
+ //    pars[1] += gRandom->Gaus(0,TMath::Sqrt(currTr->GetSigmaZ2()));
+ //
+ currTr->ResetCovMat();
+ }
+ //
+ for (Int_t j=maxLr; j--; ) {  // Layer loop
+ //
+ R5Layer *lrP = lr;
+ lr = (R5Layer*)fLayers.At(j);
+ int ntPrev = lrP->GetNMCTracks();
+ //
+ if (lrP->IsDead()) { // for passive layer just propagate the copy of all tracks
+ of prev layer >>> for (int itrP=ntPrev;itrP--;) { // loop over all tracks from
+ previous layer currTrP = lrP->GetMCTrack(itrP); if (currTrP->IsKilled())
+ continue; currTr = lr->AddMCTrack( currTrP ); if
+ (!currTr->CorrectForMeanMaterial(lrP,kTRUE)) {currTr->Kill(); continue;} //
+ correct for materials of prev. layer if (!PropagateToLayer(currTr,lr,-1))
+ {currTr->Kill(); continue;} // propagate to current layer
+ }
+ continue;
+ } // treatment of dead layer <<<
+ //
+ if (lrP->IsTPC()) { // we don't consider bg hits in TPC, just update with MC
+ cluster for (int itrP=ntPrev;itrP--;) { // loop over all tracks from previous
+ layer currTrP = lrP->GetMCTrack(itrP); if (currTrP->IsKilled()) continue;
+ currTr = lr->AddMCTrack( currTrP );
+ if (!UpdateTrack(currTr, lrP, lrP->GetMCCluster(), kTRUE)) {currTr->Kill();
+ continue;} // update with correct MC cl. if
+ (!currTr->CorrectForMeanMaterial(lrP,kTRUE)) {currTr->Kill(); continue;} //
+ correct for materials of prev. layer if (!PropagateToLayer(currTr,lr,-1))
+ {currTr->Kill(); continue;} // propagate to current layer
+ }
+ continue;
+ } // treatment of ideal (TPC?) layer <<<
+ //
+ // active layer under eff. study (ITS?): propagate copy of every track to MC
+ cluster frame (to have them all in the same frame)
+ // and calculate the limits of bg generation
+ R5Cluster* clMC = lrP->GetMCCluster();
+ if (lrP->GetLayerEff()<gRandom->Rndm()) clMC->Kill(); // simulate inefficiency
+ ResetSearchLimits();
+ int nseeds = 0;
+ for (int itrP=ntPrev;itrP--;) { // loop over all tracks from previous layer
+ currTrP = lrP->GetMCTrack(itrP); if (currTrP->IsKilled()) continue;
+ currTr = lr->AddMCTrack( currTrP );
+ if (!currTr->PropagateToCluster(clMC,fBFieldG)) {currTr->Kill(); continue;} //
+ go to MC cluster if ( !(currTr->GetNITSHits()>0 &&
+ currTr->GetNITSHits()==currTr->GetNFakeITSHits()) ) UpdateSearchLimits(currTr,
+ lrP); // RS nseeds++;
+ }
+ //
+ //    printf("%3d seeds\n",nseeds);
+ if (fUseBackground && lrP->IsITS()) GenBgClusters(lrP); //  generate background
+ hits
+ //
+ ntPrev = lr->GetNMCTracks();
+ for (int itr=ntPrev;itr--;) { // loop over all tracks PROPAGATED from previous
+ layer to clusters frame on previous layer currTrP = lr->GetMCTrack(itr); //
+ this is a seed from prev layer. The new clusters are attached to its copies,
+ the seed itself
+ // will be propagated w/o cluster update if it does not violate requested
+ "reconstructed" track settings if (currTrP->IsKilled()) continue;
+ //printf("Check    %d %p %d\n",itr,currTrP,currTrP->GetUniqueID());
+ currTrP->Print(); CheckTrackProlongations(currTrP, lr, lrP); if
+ (NeedToKill(currTrP)) currTrP->Kill(); // kill track which was not updated at
+ lrP
+ //currTrP->Kill(); // kill track which was not updated at lrP
+ }
+ //
+ lr->GetMCTracks()->Sort();
+ int ntTot = lr->GetNMCTracks(); // propagate max amount of allowed tracks to
+ current layer if (ntTot>fMaxSeedToPropagate && fMaxSeedToPropagate>0) { for
+ (int itr=ntTot;itr>=fMaxSeedToPropagate;itr--)
+ lr->GetMCTracks()->RemoveAt(itr); ntTot = fMaxSeedToPropagate;
+ }
+ //
+ for (int itr=ntTot;itr--;) {
+ currTr = lr->GetMCTrack(itr);
+ if (!currTr->CorrectForMeanMaterial(lrP,kTRUE)) {currTr->Kill();continue;} //
+ correct for materials of prev. layer if (!PropagateToLayer(currTr,lr,-1))
+ {currTr->Kill();continue;} // propagate to current layer
+ }
+ AliDebug(1,Form("Got %d tracks on layer %s",ntTot,lr->GetName()));
+ //    lr->GetMCTracks()->Print();
+ //
+ } // end loop over layers
+ //
+ // do we use vertex constraint?
+ R5Layer *vtx = GetLayer(0);
+ if (!vtx->IsDead() && vtx->IsITS()) {
+ int ntr = vtx->GetNMCTracks();
+ for (int itr=0;itr<ntr;itr++) {
+ currTr = vtx->GetMCTrack(itr);
+ if (currTr->IsKilled()) continue;
+ R5Cluster* clv = vtx->GetMCCluster();
+ Double_t meas[2] = {clv->GetY(),clv->GetZ()};
+ Double_t measErr2[3] = {vtx->fPhiRes*vtx->fPhiRes,0,vtx->fZRes*vtx->fZRes};
+ Double_t chi2v =
+ currTr->AliExternalTrackParam::GetPredictedChi2(meas,measErr2);
+ currTr->AddHit(vtx->GetActiveID(), chi2v, -1);
+ currTr->SetInnerLrChecked(vtx->GetActiveID());
+ if (NeedToKill(currTr)) currTr->Kill();
+ // if (vtx->IsITS()) {if (!UpdateTrack(currTr, vtx, vtx->GetMCCluster(),
+ kFALSE)) {currTr->Kill();continue;}}
+ }
+ }
+ EliminateUnrelated();
 
-//_____________________________________________________________________
-void R5Detector::RequirePattern(UInt_t *patt, int groups)
-{
-  if (groups<1) {fPattITS.Set(0); return;}
-  fPattITS.Set(groups);
-  for (int i=0;i<groups;i++) fPattITS[i] = patt[i];
-}
+ return kTRUE;
+ }
 
-//_____________________________________________________________________
-void R5Detector::CalcHardSearchLimits(Double_t dzv)
-{
-  //
-  TArrayD zlims;
-  zlims.Set(fNActiveITSLayers);
-  for (int il0=0;il0<fNActiveITSLayers;il0++) {
-    R5Layer* lr0 = GetActiveLayer(il0);
-    Double_t angZTol = dzv/lr0->GetRadius();
-    for (int il1=0;il1<fNActiveITSLayers;il1++) {
-      if (il1==il0) continue;
-      R5Layer* lr1 = GetActiveLayer(il1);
-      Double_t ztol = angZTol*TMath::Abs(lr0->GetRadius() - lr1->GetRadius());
-      if (ztol>zlims[il1]) zlims[il1] = ztol;
-    }
-  }
-  //
-  for (int il=0;il<fNActiveITSLayers;il++) printf("ZTol%d:
-%8.4f\n",il,zlims[il]);
-}
 
-//_______________________________________________________
-Double_t R5Detector::PropagateBack(R5Probe* trc)
-{
-  static R5Probe bwd;
-  bwd = *trc;
-  bwd.ResetCovMat();
-  static Double_t measErr2[3] = {0,0,0};
-  static Double_t meas[2] = {0,0};
-  int icl = 0;
-  Double_t chi2Tot = 0;
-  for (int il=1;il<=fLastActiveITSLayer;il++) {
-    R5Layer* lr = GetLayer(il);
-    if (!PropagateToLayer(&bwd,lr,1)) return -1;
-    int aID = lr->GetActiveID();
-    if (aID>-1 && (icl=bwd.fClID[aID])>=-1) {
-      R5Cluster* clMC =  icl<0 ? lr->GetMCCluster() : lr->GetBgCluster(icl);
-      if (!bwd.PropagateToCluster(clMC,fBFieldG)) return -1;
-      meas[0] = clMC->GetY(); meas[1] = clMC->GetZ();
-      measErr2[0] = lr->fPhiRes*lr->fPhiRes;
-      measErr2[2] = lr->fZRes*lr->fZRes;
-      Double_t chi2a =
-bwd.AliExternalTrackParam::GetPredictedChi2(meas,measErr2); chi2Tot += chi2a;
-      printf("Chis %d (cl%+3d): t2c: %6.3f tot: %6.3f\n",aID,icl,chi2a,
-chi2Tot); bwd.AliExternalTrackParam::Update(meas,measErr2); bwd.AddHit(aID,
-chi2a, icl);
-    }
-    if (!bwd.CorrectForMeanMaterial(lr,kFALSE)) return -1;
-  }
-  return chi2Tot;
-}
-*/
+
+ //____________________________________________________________________________
+ Int_t R5Detector::GenBgClusters(R5Layer* lr)
+ {
+ // Generate fake clusters in precalculated RPhi,Z range
+ if (fNBgLimits<1) return 0; // limits were not set - no track was prolongated
+ //
+ // Fix search limits to avoid seeds which will anyway point very far from the
+ vertex Double_t tolY = TMath::Sqrt(lr->fSig2EstD)*fMaxChi2ClSQ; Double_t tolZ =
+ TMath::Sqrt(lr->fSig2EstZ)*fMaxChi2ClSQ;
+
+ //  printf("Before: Y: %+6.3f : %+6.3f tolY: %6.3f || Z: %+6.3f : %+6.3f tolZ:
+ %6.3f\n",fBgYMin,fBgYMax,tolY, fBgZMin,fBgZMax,tolZ); if (fBgYMin <
+ lr->fClCorr.fY-tolY) fBgYMin = lr->fClCorr.fY-tolY; if (fBgYMax >
+ lr->fClCorr.fY+tolY) fBgYMax = lr->fClCorr.fY+tolY; if (fBgZMin <
+ lr->fClCorr.fZ-tolZ) fBgZMin = lr->fClCorr.fZ-tolZ; if (fBgZMax >
+ lr->fClCorr.fZ+tolZ) fBgZMax = lr->fClCorr.fZ+tolZ;
+ //printf("After: Y: %+6.3f : %+6.3f tolY: %6.3f || Z: %+6.3f : %+6.3f tolZ:
+ %6.3f\n",fBgYMin,fBgYMax,tolY, fBgZMin,fBgZMax,tolZ);
+ //
+ Double_t dy = fBgYMax - fBgYMin;
+ Double_t dz = fBgZMax - fBgZMin;
+ Double_t surf = dy*dz;               // surface of generation
+ if (surf<0) return 0;
+ Double_t poissProb = surf*HitDensity(lr->fR)*lr->GetLayerEff();
+ AliDebug(2,Form("Bg for Lr %s (r=%.2f) : Density %.2f on surface %.2e [%+.4f :
+ %+.4f][%+.4f %+.4f]",
+ lr->GetName(),lr->fR,HitDensity(lr->fR),surf,fBgYMin,fBgYMax,fBgZMin,fBgZMax));
+ int nFakesGen = gRandom->Poisson( poissProb ); // preliminary number of extra
+ clusters to test R5Cluster *refCl = lr->GetMCCluster(); Double_t sig2y =
+ lr->GetPhiRes()*lr->GetPhiRes(); Double_t sig2z = lr->GetZRes()*lr->GetZRes();
+ for (int ic=nFakesGen;ic--;) {
+ Double_t y = fBgYMin+dy*gRandom->Rndm();
+ Double_t z = fBgZMin+dz*gRandom->Rndm();
+ Double_t dfy = y-refCl->GetY();
+ Double_t dfz = z-refCl->GetZ();
+ Double_t dist = (dfy*dfy)/sig2y + (dfz*dfz)/sig2z;
+ if (dist<4) continue; // avoid overlap with MC cluster
+ lr->AddBgCluster(y, z, refCl->GetX(), refCl->GetPhi());
+ }
+ AliDebug(2,Form("Added %6d noise clusters on lr %s (poisson Prob=%8.2f for
+ surface %.2e) DY:%7.4f DZ: %7.4f",
+ lr->GetNBgClusters(),lr->GetName(),poissProb,surf,dy,dz));
+ return nFakesGen;
+ //
+ }
+
+ //____________________________________________________________________________
+ void R5Detector::UpdateSearchLimits(R5Probe* probe, R5Layer* lr)
+ {
+ // define the search window for track on layer (where the bg hist will be
+ generated) static Double_t *currYMin = fBgYMinTr.GetArray(); static Double_t
+ *currYMax = fBgYMaxTr.GetArray(); static Double_t *currZMin =
+ fBgZMinTr.GetArray(); static Double_t *currZMax = fBgZMaxTr.GetArray();
+ //
+ Double_t sizeY = probe->GetSigmaY2(), sizeZ = probe->GetSigmaZ2();
+ //
+ //  if (sizeY>2) sizeY=2;
+ //  if (sizeZ>2) sizeZ=2;
+ //  printf("Sizes at %s: %.5f %.5f\n",lr->GetName(), sizeY,sizeZ);
+ //
+ if (fNBgLimits>=fBgYMinTr.GetSize()) { // expand arrays, update pointers
+ fBgYMinTr.Set(2*(fNBgLimits+1));
+ fBgYMaxTr.Set(2*(fNBgLimits+1));
+ fBgZMinTr.Set(2*(fNBgLimits+1));
+ fBgZMaxTr.Set(2*(fNBgLimits+1));
+ currYMin = fBgYMinTr.GetArray();
+ currYMax = fBgYMaxTr.GetArray();
+ currZMin = fBgZMinTr.GetArray();
+ currZMax = fBgZMaxTr.GetArray();
+ }
+ if (fBgYMin > (currYMin[fNBgLimits]=probe->GetY()-sizeY) ) fBgYMin =
+ currYMin[fNBgLimits]; if (fBgYMax < (currYMax[fNBgLimits]=probe->GetY()+sizeY)
+ ) fBgYMax = currYMax[fNBgLimits]; if (fBgZMin >
+ (currZMin[fNBgLimits]=probe->GetZ()-sizeZ) ) fBgZMin = currZMin[fNBgLimits]; if
+ (fBgZMax < (currZMax[fNBgLimits]=probe->GetZ()+sizeZ) ) fBgZMax =
+ currZMax[fNBgLimits]; if (AliLog::GetGlobalDebugLevel()>=2) {
+ probe->Print("l");
+ AliInfo(Form("Seed%3d Lr %s limits for y:%+8.4f z:%+8.4f [%+.4f : %+.4f][%+.4f
+ %+.4f]",fNBgLimits,lr->GetName(),probe->GetY(),probe->GetZ(),currYMin[fNBgLimits],currYMax[fNBgLimits],currZMin[fNBgLimits],currZMax[fNBgLimits]));
+ AliInfo(Form("Global Limits Lr %s                            [%+.4f :
+ %+.4f][%+.4f %+.4f]",lr->GetName(),fBgYMin,fBgYMax,fBgZMin,fBgZMax));
+ AliInfo(Form("MC Cluster: %+.4f : %+.4f",lr->fClMC.fY, lr->fClMC.fZ));
+ }
+ probe->SetUniqueID(fNBgLimits++);
+ //
+ if (lr->IsITS() && probe->GetNFakeITSHits()==0) {
+ if (fHMCLrResidRPhi) fHMCLrResidRPhi->Fill(probe->GetY() -
+ lr->GetMCCluster()->GetY(), lr->GetActiveID()); if (fHMCLrResidZ)
+ fHMCLrResidZ->Fill(probe->GetZ() -
+ lr->GetMCCluster()->GetZ(),lr->GetActiveID());
+ }
+ //
+ }
+
+ //____________________________________________________________________________
+ void R5Detector::CheckTrackProlongations(R5Probe *probe, R5Layer* lr, R5Layer*
+ lrP)
+ {
+ // explore prolongation of probe from lrP to lr with all possible clusters of
+ lrP
+ // the probe is already brought to clusters frame
+ int nCl = lrP->GetNBgClusters();
+ Double_t measErr2[3] = {lrP->fPhiRes*lrP->fPhiRes,0,lrP->fZRes*lrP->fZRes};
+ Double_t meas[2] = {0,0};
+ UInt_t tmpID = probe->GetUniqueID();
+ Double_t yMin = fBgYMinTr[tmpID];
+ Double_t yMax = fBgYMaxTr[tmpID];
+ Double_t zMin = fBgZMinTr[tmpID];
+ Double_t zMax = fBgZMaxTr[tmpID];
+ //
+ probe->SetInnerLrChecked(lrP->GetActiveID());
+ for (int icl=-1;icl<nCl;icl++) {
+ R5Cluster* cl = icl<0 ? lrP->GetMCCluster() : lrP->GetBgCluster(icl);  // -1 is
+ for true MC cluster if (cl->IsKilled()) { if (AliLog::GetGlobalDebugLevel()>1)
+ {printf("Skip cluster %d ",icl); cl->Print();} continue;
+ }
+ Double_t y = cl->GetY();
+ Double_t z = cl->GetZ();
+ AliDebug(2,Form("Check seed%d against cl#%d out of %d at layer %s | y:%+8.4f
+ z:%+8.4f [%+.4f:%+.4f]
+ [%+.4f:%+.4f]",tmpID,icl,nCl,lrP->GetName(),y,z,yMin,yMax,zMin,zMax)); if
+ (AliLog::GetGlobalDebugLevel()>0) { if (icl==-1 && probe->GetNFakeITSHits()==0)
+ { meas[0] = y; meas[1] = z; Double_t chi2a =
+ probe->AliExternalTrackParam::GetPredictedChi2(meas,measErr2); if
+ (chi2a>fMaxChi2Cl || (y<yMin || y>yMax) || (z<zMin || z>zMax)) {
+ probe->Print();
+ printf("Loosing good point (y:%+8.4f z:%+8.4f) on lr %s: chi2: %.2f  |
+ dy:%+8.4f dz:%+8.4f [%+.4f:%+.4f]  [%+.4f:%+.4f] |x: %.2f %.2f | phi: %.2f
+ %.2f\n",
+ y,z,lrP->GetName(),chi2a,y-probe->GetY(),z-probe->GetZ(),yMin,yMax,zMin,zMax,
+ probe->GetX(), cl->GetX(), probe->GetAlpha(), cl->GetPhi());
+ }
+ }
+ }
+ if (y<yMin || y>yMax) continue; // preliminary check on Y
+ if (z<zMin || z>zMax) continue; // preliminary check on Z
+ meas[0] = y; meas[1] = z;
+ Double_t chi2 = probe->AliExternalTrackParam::GetPredictedChi2(meas,measErr2);
+ if (fHMCLrChi2 && probe->GetNFakeITSHits()==0 && icl==-1)
+ fHMCLrChi2->Fill(chi2,lrP->GetActiveID()); AliDebug(2,Form("Seed-to-cluster
+ chi2 = Chi2=%.2f",chi2)); if (chi2>fMaxChi2Cl) continue;
+ //
+ // update track copy
+ R5Probe* newTr = lr->AddMCTrack( probe );
+ fUpdCalls++;
+ if (!newTr->AliExternalTrackParam::Update(meas,measErr2)) {
+ AliDebug(2,Form("Layer %s: Failed to update the track by measurement {%.3f,%3f}
+ err {%.3e %.3e %.3e}", lrP->GetName(),meas[0],meas[1],
+ measErr2[0],measErr2[1],measErr2[2])); if (AliLog::GetGlobalDebugLevel()>1)
+ newTr->Print("l"); newTr->Kill(); continue;
+ }
+ newTr->AddHit(lrP->GetActiveID(), chi2, icl);
+ if (AliLog::GetGlobalDebugLevel()>1) {
+ AliInfo("Cloned updated track is:");
+ newTr->Print();
+ }
+ if (NeedToKill(newTr)) newTr->Kill();
+ }
+ //
+ }
+
+ //____________________________________________________________________________
+ Bool_t R5Detector::NeedToKill(R5Probe* probe) const
+ {
+ // check if the seed at given layer (last one where update was tried)
+ // still has chances to be reconstructed
+ const Bool_t kModeKillMiss = kFALSE;
+ //
+ Bool_t kill = kFALSE;
+ while (1) {
+ int il = probe->GetInnerLayerChecked();
+ int nITS = probe->GetNITSHits();
+ int nITSMax = nITS + il; // maximum it can have
+ if (nITSMax<fMinITSHits) {
+ kill = kTRUE;
+ break;
+ }    // has no chance to collect enough ITS hits
+ //
+ int ngr = fPattITS.GetSize();
+ if (ngr>0) { // check pattern
+ UInt_t patt = probe->GetHitsPatt();
+ // complete the layers not checked yet
+ for (int i=il;i--;) patt |= (0x1<<i);
+ for (int ig=ngr;ig--;)
+ if (!(((UInt_t)fPattITS[ig]) & patt)) {
+ kill = kTRUE;
+ break;
+ }
+ //
+ }
+ //
+ if (nITS>2) {  // check if smallest possible norm chi2/ndf is acceptable
+ Double_t chi2min = probe->GetChi2();
+ if (kModeKillMiss) {
+ int nMiss = fNActiveITSLayers - probe->GetInnerLayerChecked() - nITS; // layers
+ already missed chi2min = nMiss*probe->GetMissingHitPenalty();
+ }
+ chi2min /= ((nITSMax<<1)-R5Probe::kNDOF);
+ if (chi2min>fMaxNormChi2NDF) {
+ kill = kTRUE;
+ break;
+ }
+ }
+ //
+ // loose vertex constraint
+ Double_t dst;
+ if (nITS>=2) {
+ probe->GetZAt(0,fBFieldG,dst);
+ //printf("Zd (F%d): %f\n",probe->GetNFakeITSHits(),dst);
+ if (TMath::Abs(dst)>10.) {
+ kill = kTRUE;
+ break;
+ }
+ }
+ if (nITS>=3) {
+ probe->GetYAt(0,fBFieldG,dst);
+ //printf("Dd (F%d): %f\n",probe->GetNFakeITSHits(),dst);
+ if (TMath::Abs(dst)>10.) {
+ kill = kTRUE;
+ break;
+ }
+ }
+ //
+ break;
+ }
+ if (kill && AliLog::GetGlobalDebugLevel()>1 && probe->GetNFakeITSHits()==0) {
+ printf("Killing good seed, last upd layer was
+ %d\n",probe->GetInnerLayerChecked()); probe->Print("l");
+ }
+ return kill;
+ }
+
+ //_____________________________________________________________________
+ void R5Detector::EliminateUnrelated()
+ {
+ // kill useless tracks
+ R5Layer* lr = GetLayer(0);
+ int ntr = lr->GetNMCTracks();
+ int nval = 0;
+ for (int itr=0;itr<ntr;itr++) {
+ R5Probe* probe = lr->GetMCTrack(itr);
+ if (probe->IsKilled()) continue;
+ if (probe->GetNITSHits()-probe->GetNFakeITSHits()<1) {probe->Kill(); continue;}
+ nval++;
+ }
+ lr->GetMCTracks()->Sort();
+ const int kDump = 0;
+ if (kDump>0) {
+ printf("Valid %d out of %d\n",nval, ntr);
+ ntr = ntr>kDump ? kDump:0;
+ for (int itr=0;itr<ntr;itr++) {
+ lr->GetMCTrack(itr)->Print();
+ }
+ }
+ }
+
+ //_____________________________________________________________________
+ void R5Detector::RequirePattern(UInt_t *patt, int groups)
+ {
+ if (groups<1) {fPattITS.Set(0); return;}
+ fPattITS.Set(groups);
+ for (int i=0;i<groups;i++) fPattITS[i] = patt[i];
+ }
+
+ //_____________________________________________________________________
+ void R5Detector::CalcHardSearchLimits(Double_t dzv)
+ {
+ //
+ TArrayD zlims;
+ zlims.Set(fNActiveITSLayers);
+ for (int il0=0;il0<fNActiveITSLayers;il0++) {
+ R5Layer* lr0 = GetActiveLayer(il0);
+ Double_t angZTol = dzv/lr0->GetRadius();
+ for (int il1=0;il1<fNActiveITSLayers;il1++) {
+ if (il1==il0) continue;
+ R5Layer* lr1 = GetActiveLayer(il1);
+ Double_t ztol = angZTol*TMath::Abs(lr0->GetRadius() - lr1->GetRadius());
+ if (ztol>zlims[il1]) zlims[il1] = ztol;
+ }
+ }
+ //
+ for (int il=0;il<fNActiveITSLayers;il++) printf("ZTol%d:
+ %8.4f\n",il,zlims[il]);
+ }
+
+ //_______________________________________________________
+ Double_t R5Detector::PropagateBack(R5Probe* trc)
+ {
+ static R5Probe bwd;
+ bwd = *trc;
+ bwd.ResetCovMat();
+ static Double_t measErr2[3] = {0,0,0};
+ static Double_t meas[2] = {0,0};
+ int icl = 0;
+ Double_t chi2Tot = 0;
+ for (int il=1;il<=fLastActiveITSLayer;il++) {
+ R5Layer* lr = GetLayer(il);
+ if (!PropagateToLayer(&bwd,lr,1)) return -1;
+ int aID = lr->GetActiveID();
+ if (aID>-1 && (icl=bwd.fClID[aID])>=-1) {
+ R5Cluster* clMC =  icl<0 ? lr->GetMCCluster() : lr->GetBgCluster(icl);
+ if (!bwd.PropagateToCluster(clMC,fBFieldG)) return -1;
+ meas[0] = clMC->GetY(); meas[1] = clMC->GetZ();
+ measErr2[0] = lr->fPhiRes*lr->fPhiRes;
+ measErr2[2] = lr->fZRes*lr->fZRes;
+ Double_t chi2a = bwd.AliExternalTrackParam::GetPredictedChi2(meas,measErr2);
+ chi2Tot += chi2a;
+ printf("Chis %d (cl%+3d): t2c: %6.3f tot: %6.3f\n",aID,icl,chi2a, chi2Tot);
+ bwd.AliExternalTrackParam::Update(meas,measErr2);
+ bwd.AddHit(aID, chi2a, icl);
+ }
+ if (!bwd.CorrectForMeanMaterial(lr,kFALSE)) return -1;
+ }
+ return chi2Tot;
+ }
+ */

@@ -418,41 +418,42 @@ public:
                          const R5Cluster *cl) const;
 
   /*
-  Bool_t SolveSingleTrackViaKalman(Double_t mass, Double_t pt, Double_t eta);
-  Bool_t SolveSingleTrackViaKalmanMC(int offset=6);
-  Bool_t SolveSingleTrack(Double_t mass, Double_t pt, Double_t eta, TObjArray*
-  sumArr=0, int nMC=10000,int offset=6); R5Probe* KalmanSmooth(int actLr, int
-  actMin,int actMax) const; R5Probe* KalmanSmoothFull(int actLr, int actMin,int
-  actMax) const; //TBD void   EliminateUnrelated();
-  //
+   Bool_t SolveSingleTrackViaKalman(Double_t mass, Double_t pt, Double_t eta);
+   Bool_t SolveSingleTrackViaKalmanMC(int offset=6);
+   Bool_t SolveSingleTrack(Double_t mass, Double_t pt, Double_t eta, TObjArray*
+   sumArr=0, int nMC=10000,int offset=6); R5Probe* KalmanSmooth(int actLr, int
+   actMin,int actMax) const; R5Probe* KalmanSmoothFull(int actLr, int actMin,int
+   actMax) const; //TBD void   EliminateUnrelated();
+   //
 
 
-  //
-  Bool_t   GetUseBackground()               const {return fUseBackground;}
-  void     SetUseBackground(Bool_t v=kTRUE)       {fUseBackground = v;}
-  void     CheckTrackProlongations(R5Probe *probe, R5Layer* lr, R5Layer* lrP);
-  void     ResetSearchLimits() {fBgYMin=fBgZMin=1e6; fBgYMax=fBgZMax=-1e6;
-  fNBgLimits=0;} void     UpdateSearchLimits(R5Probe* probe, R5Layer* lr); Int_t
-  GenBgClusters(R5Layer* lr); Bool_t   NeedToKill(R5Probe* probe) const;
-  Double_t PropagateBack(R5Probe* trc);
-  //
-  // definition of reconstructable track
-  void     RequirePattern(UInt_t *patt, int groups);
-  //
-  //
-  Double_t GetUpdCalls()                       const {return fUpdCalls;}
-  TH2F*    GetHMCLrResidRPhi()                 const {return fHMCLrResidRPhi;}
-  TH2F*    GetHMCLrResidZ()                    const {return fHMCLrResidZ;}
-  TH2F*    GetHMCLrChi2()                      const {return fHMCLrChi2;}
-  //
-  void     PrintITS(Option_t* opt="") const {for (int
-  i=0;i<=fLastActiveITSLayer;i++) if (!GetLayer(i)->IsDead())
-  GetLayer(i)->Print(opt);} static void SetVtxConstraint(Double_t d=-1, Double_t
-  z=-1) {fgVtxConstraint[0]=d; fgVtxConstraint[1]=z;}
-  //
-  void CalcHardSearchLimits(Double_t dzv);
-  void SetMaxSeedToPropagate(Int_t n=300) {fMaxSeedToPropagate = n;}
-  */
+   //
+   Bool_t   GetUseBackground()               const {return fUseBackground;}
+   void     SetUseBackground(Bool_t v=kTRUE)       {fUseBackground = v;}
+   void     CheckTrackProlongations(R5Probe *probe, R5Layer* lr, R5Layer* lrP);
+   void     ResetSearchLimits() {fBgYMin=fBgZMin=1e6; fBgYMax=fBgZMax=-1e6;
+   fNBgLimits=0;} void     UpdateSearchLimits(R5Probe* probe, R5Layer* lr);
+   Int_t    GenBgClusters(R5Layer* lr);
+   Bool_t   NeedToKill(R5Probe* probe) const;
+   Double_t PropagateBack(R5Probe* trc);
+   //
+   // definition of reconstructable track
+   void     RequirePattern(UInt_t *patt, int groups);
+   //
+   //
+   Double_t GetUpdCalls()                       const {return fUpdCalls;}
+   TH2F*    GetHMCLrResidRPhi()                 const {return fHMCLrResidRPhi;}
+   TH2F*    GetHMCLrResidZ()                    const {return fHMCLrResidZ;}
+   TH2F*    GetHMCLrChi2()                      const {return fHMCLrChi2;}
+   //
+   void     PrintITS(Option_t* opt="") const {for (int
+   i=0;i<=fLastActiveITSLayer;i++) if (!GetLayer(i)->IsDead())
+   GetLayer(i)->Print(opt);} static void SetVtxConstraint(Double_t d=-1,
+   Double_t z=-1) {fgVtxConstraint[0]=d; fgVtxConstraint[1]=z;}
+   //
+   void CalcHardSearchLimits(Double_t dzv);
+   void SetMaxSeedToPropagate(Int_t n=300) {fMaxSeedToPropagate = n;}
+   */
 protected:
   Int_t fNLayers;                 // total number of layers in the model
   Int_t fNActiveLayers;           // number of active layers in the model
